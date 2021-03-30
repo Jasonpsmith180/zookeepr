@@ -7,10 +7,10 @@ const app = express();
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray = [];
     let filteredResults = animalsArray;
-    if(query.personalityTraits) {
+    if (query.personalityTraits) {
         // save personality traits as dedicated array
         // if personality traits is a string place it into a new array and save
-        if(typeof query.personalityTraits === 'string') {
+        if (typeof query.personalityTraits === 'string') {
             personalityTraitsArray = [query.personalityTraits];
         } else {
             personalityTraitsArray = query.personalityTraits;
@@ -29,25 +29,39 @@ function filterByQuery(query, animalsArray) {
             );
         });
     }
-    if(query.diet) {
+    if (query.diet) {
         filteredResults = filteredResults.filter(animal => animal.diet === query.diet);
     }
-    if(query.species) {
+    if (query.species) {
         filteredResults = filteredResults.filter(animal => animal.species === query.species);
     }
-    if(query.name) {
+    if (query.name) {
         filteredResults = filteredResults.filter(animal => animal.name === query.name);
     }
     // return the filtered results:
     return filteredResults;
 }
 
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    return result;
+}
+
 app.get('/api/animals', (req, res) => {
     let results = animals;
-    if(req.query) {
+    if (req.query) {
         results = filterByQuery(req.query, results);
     }
     res.json(results);
+});
+
+app.get('/api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+    if (result) {
+        res.json(result);
+    } else {
+        res.sendStatus(404);
+    }
 });
 
 app.listen(PORT, () => {
