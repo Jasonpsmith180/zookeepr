@@ -77,7 +77,7 @@ function validateAnimal(animal) {
     if (!animal.diet || typeof animal.diet !==  'string') {
         return false;
     }
-    if (animal.personalityTraits || typeof animal.personalityTraits !== 'string') {
+    if (!animal.personalityTraits ||  !Array.isArray(animal.personalityTraits)) {
         return false;
     }
     return true;
@@ -111,7 +111,7 @@ app.post('/api/animals', (req, res) => {
     } else {
         // add animal to json file and animals array in this function
         const animal = createNewAnimal(req.body, animals);
-        res.json(animals);
+        res.json(animal);
     }
 });
 
