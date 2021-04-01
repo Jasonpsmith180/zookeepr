@@ -135,6 +135,19 @@
         "hungry"
       ],
       "id": "13"
+    },
+    {
+      "name": "Bodhi",
+      "species": "Doggo",
+      "diet": "omnivore",
+      "personalityTraits": [
+        "hungry",
+        "zany",
+        "anxious",
+        "loving",
+        "goofy"
+      ],
+      "id": "14"
     }
   ]
 }
